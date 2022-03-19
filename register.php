@@ -89,10 +89,42 @@ if(isset($_POST['register_button'])){
         }
     }
 
-    if(strlen($password > 30 || strlen($password < 5))){
+    if(strlen($password) > 30 || strlen($password) < 5) {
         array_push($error_array, "Your password must be between 5 and 30 characters.<br />");
     }
 
+    if(empty($error_array))  {
+        $password = md5($password); //Encrypt password before sending to the database.
+
+        //Generate username by concatenating first name and last name.
+        $username = strtolower($fname . "_" . $lname);
+        $check_username_query = mysqli_query($con, "SELECT username FROM users WHERE username='$username'");
+
+        $i = 0;
+		$temp_username = $username; //Temporary username variable used to find unique username
+     
+		//If username already exists, add number to end and check again
+		while(mysqli_num_rows($check_username_query) != 0){
+			$temp_username = $username; //Reset temporary username back to original username
+			$i++;
+			$temp_username = $username."_".$i;
+			$check_username_query = mysqli_query($con, "SELECT username FROM users WHERE username='$temp_username'");
+		}
+		 
+		$username = $temp_username; //$temp_username will now contain the unique username
+
+        // Profile picture assignment.
+        $rand = rand(1,2); //Random number between 1 and 2
+
+        if($rand == 1)
+            $profile_pic = "assets/images/profile_pics/defaults/head_deep_blue.png";
+        else if($rand == 2)
+            $profile_pic = "assets/images/profile_pics/defaults/head_emerald.png";
+
+        $query = mysqli_query($con, "INSERT INTO users VALUES ('', '$fname', '$lname', '$username', '$em', '$password', '$date', '$profile_pic', '0', '0', 'no', ',')");
+
+        array_push($error_array, "<span style='color: #14C800;'>You're all set! Go ahead and login!</span><br />");
+    }
 }
 
 ?>
@@ -140,7 +172,9 @@ if(isset($_POST['register_button'])){
         else if(in_array("Your password can only contain english characters or numbers.<br />", $error_array)) echo "Your password can only contain english characters or numbers.<br />"; 
         else if(in_array("Your password must be between 5 and 30 characters.<br />", $error_array)) echo "Your password must be between 5 and 30 characters.<br />"; ?>
         <input type="submit" name="register_button" value="Register">
+        <br />
 
+        <?php if(in_array("<span style='color: #14C800;'>You're all set! Go ahead and login!</span><br />", $error_array)) echo "<span style='color: #14C800;'>You're all set! Go ahead and login!</span><br />"; ?>
     </form>
 </body>
 </html>
