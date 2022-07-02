@@ -1,14 +1,7 @@
 <?php
-require 'config/config.php';
-
+include("includes/header.php");
+// session_destroy();
 ?>
-
-
-<html>
-<head>
-    <title>Up Stack</title>
-</head>
-<body>
  Hello Glyn!!!
 </body>
 </html>
