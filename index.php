@@ -36,7 +36,7 @@ if(isset($_POST['post'])) {
 
         
         <div class="posts_area"></div>
-        <img id="#loading" src="assets/images/icons/loading.gif"/>
+        <img id="loading" src="assets/images/icons/loading.gif"/>
 
     </div>
     <script>
@@ -63,7 +63,7 @@ if(isset($_POST['post'])) {
                 var height = $('.posts_area').height(); // Div containing posts
                 var scroll_top = $(this).scrollTop();
                 var page = $('.posts_area').find('.nextPage').val();
-                var noMorePosts = $('posts_area').find('.noMorePosts').val();
+                var noMorePosts = $('.posts_area').find('.noMorePosts').val();
 
                 if((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false'){
                     $('#loading').show();
@@ -82,8 +82,11 @@ if(isset($_POST['post'])) {
                             $('.posts_area').append(response);
                         }
                     });
-                }
-            })
+
+                } // End if
+
+                return false;
+            }); // End (window).scroll(function())
 
         });
 
