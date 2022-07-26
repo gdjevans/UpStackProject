@@ -12,6 +12,12 @@ body {
    background-color: #e6eae8;
 }
 
+a {
+    color: #d35400;
+    text-decoration: none;
+    font-weight: 500;
+}
+
 .top_bar{
     width: 100%;
     min-width: 1050px;
@@ -36,6 +42,7 @@ body {
 
 a:hover {
     text-decoration: none;
+    color: #fab1a0;
 }
 
 nav {
@@ -144,6 +151,7 @@ textarea:focus {
     font-size: 15px;
     padding: 0px 5px;
     min-height: 75px;
+    cursor: pointer;
 }
 
 .post_profile_pic {
@@ -153,4 +161,41 @@ textarea:focus {
 
 .post_profile_pic img {
     border-radius: 5px;
+}
+
+#comment_iframe {
+    max-height: 250px;
+    width: 100%;
+}
+
+.comment_section {
+   padding: 0 5px 5px 5px; 
+}
+
+.comment_section img {
+    margin: 0 3px 3px 3px;
+    border-radius: 3px;
+}
+
+#comment_form textarea {
+    border-color: #D3D3D3;
+    width: 85%;
+    height: 35px;
+    border-radius: 5px;
+    color: #616060;
+    font-size: 14px;
+    margin: 3px 3px 3px 5px;
+}
+
+#comment_form input[type="submit"] {
+    border: none;
+    background-color: #d35400;
+    font-family: 'Bellotta-BoldItalic', sans-serif;
+    color: #e6eae8; 
+    text-shadow: #79491e 0.5px 0.5px 0px;
+    border-radius: 3px;
+    width: 12%;
+    height: 41px;
+    margin-top: 3px;
+    position: absolute;
 }
