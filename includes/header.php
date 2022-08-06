@@ -20,8 +20,10 @@ else {
     <title>Up Stack</title>
 
     <!-- Javascript -->
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/upstack.js"></script>
 
     <!-- CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">

@@ -66,17 +66,46 @@ if(isset($_POST['respond_request'])) {
                     echo '<input type="submit" name="add_friend" class="success" value="Add Friend"><br/>';
                 }
             }
-
             ?>
 
         </form>
+        <input type="submit" class="deep_blue" data-toggle="modal" data-target="#post_form" value="Post Something">
     </div>
     <div class="main_column column">
         This is a profile page for... 
         <br/>
         <?php echo $username; ?>
+
+        
     </div>
 
+    <div class="modal fade" id="post_form" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+     
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title" id="postModalLabel">Post something</h4>
+          </div>
+     
+          <div class="modal-body">
+          <p>This will appear on their newsfeed for your friends to see.</p>
+     
+          <form class="profile_post" action="profile.php" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+          <textarea class="form-control" name="post_body"></textarea>
+          <input type="hidden" name="user_from" value="<?php echo $userLoggedIn; ?>">
+          <input type="hidden" name="user_to" value="<?php echo $username; ?>">
+          </div>
+          </form>
+          </div>
+     
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" name="post_button" id="submit_profile_post">Post</button>
+          </div>
+        </div>
+      </div>
     </div>
 </body>
 </html>
