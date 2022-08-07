@@ -221,16 +221,23 @@ class Post {
                 }
                 ?>
                 <script>
+
                     $(document).ready(function() {
+
                         $('#post<?php echo $id; ?>').on('click', function() {
-                            bootbox.confirm("Are you sure you want to delete this post?", function(result)) {
+                            bootbox.confirm("Are you sure you want to delete this post?", function(result) {
+
                                 $.post("includes/form_handlers/delete_post.php?post_id=<?php echo $id; ?>", {result:result});
 
                                 if(result)
                                     location.reload();
-                            };
+
+                            });
                         });
+
+
                     });
+
                 </script>
                 <?php
             } // End while loop.
