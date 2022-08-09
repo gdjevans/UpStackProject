@@ -329,3 +329,10 @@ textarea:focus {
     border-color: #d35400;
     color: #a6490c
 }
+
+.profile_main_column {
+    min-width: 675;
+    float: left;
+    width: 70%;
+    z-index: -1;
+}
