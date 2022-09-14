@@ -22,9 +22,9 @@ class User {
 
     public function getFirstAndLastName() {
         $username = $this->user['username'];
-        $query = mysqli_query($this->con, "SELECT first_name, last_name FROM users WHERE username = '$username'");
-        $row = mysqli_fetch_array($query);
-        return $row['first_name'] . " " . $row['last_name'];
+		$query = mysqli_query($this->con, "SELECT first_name, last_name FROM users WHERE username='$username'");
+		$row = mysqli_fetch_array($query);
+		return $row['first_name'] . " " . $row['last_name'];
     }
     
     public function getProfilePic() {
