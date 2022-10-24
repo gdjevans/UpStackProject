@@ -21,7 +21,7 @@ if(isset($_POST['post'])) {
             </a>
             <br />
             <?php echo "Posts: " . $user['num_posts'] . "<br />"; 
-            echo "Likes: " . $user['num_likes'];
+            echo "Likes: " . $user['num_likes']
             ?>
         </div>
     </div>
@@ -66,7 +66,7 @@ if(isset($_POST['post'])) {
                 if((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false'){
                     $('#loading').show();
 
-                    var ajaxReq = $.ajax({
+                    var ajaxRequest = $.ajax({
                         url: "includes/handlers/ajax_load_posts.php",
                         type: "POST",
                         data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
