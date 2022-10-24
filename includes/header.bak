@@ -43,7 +43,7 @@ else {
         </div>
 
         <nav>
-            <a href="<?php echo $userLoggedIn; ?>">
+            <a href="<?php echo $userLoggedIn ?>">
                 <?php echo $user['first_name'];?>
             </a>
             <a href="index.php">
@@ -53,7 +53,7 @@ else {
                 <i class="fa fa-envelope fa-lg"></i>
             </a>
             <a href="#">
-				<i class="fa fa-bell fa-lg"></i>
+                <i class="fa fa-bell-o fa-lg"></i>
             </a>
             <a href="requests.php">
                 <i class="fa fa-users fa-lg"></i>
@@ -66,7 +66,7 @@ else {
             </a>
         </nav>
 
-		<div class="dropdown_data_window" style="height:0px; border:none;"></div>
+        <div class="dropdown_data_window"></div>
         <input type="hidden" id="dropdown_data_type" value="">
 
     </div>
