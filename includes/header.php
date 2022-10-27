@@ -64,14 +64,14 @@ else {
                 <i class="fa fa-envelope fa-lg"></i>
                 <?php 
                 if($num_messages > 0)
-                echo '<span class="notifcation_badge" id="unread_message">' . $num_messages . '</span>';
+                echo '<span class="notification_badge" id="unread_message">' . $num_messages . '</span>';
                 ?>
             </a>
             <a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'notification')">
 				<i class="fa fa-bell fa-lg"></i>
                 <?php 
                 if($num_notifications > 0)
-                echo '<span class="notifcation_badge" id="unread_notification">' . $num_notifications . '</span>';
+                echo '<span class="notification_badge" id="unread_notification">' . $num_notifications . '</span>';
                 ?>
             </a>
             <a href="requests.php">
