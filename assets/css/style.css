@@ -417,7 +417,7 @@ textarea:focus {
 
 .resultDisplay {
     padding: 5px 5px 0 5px;
-    height: 60px;
+    height: 70px;
     border-bottom: 1px solid #d3d3d3;
 }
 
@@ -528,4 +528,25 @@ textarea:focus {
 .button_holder img {
     margin-top: 1px;
     width: 20px;
+}
+
+.search_results {
+    background-color: #fff;
+    border: 1px solid #DADADA;
+    border-bottom: none;
+    border-top: none;
+    margin-top: 21px;
+}
+
+.search_results_footer {
+    padding: 7px 4px 0px 4px;
+    height: 30px;
+    border: 1px solid #DADADA;
+    border-top: none;
+    background-color: #d35400;
+    text-align: center;
+}
+
+.search_results_footer a {
+    color: #fff;
 }
