@@ -551,7 +551,7 @@ textarea:focus {
     color: #fff;
 }
 
-.search_result {
+.search_results {
    padding: 10px;
    height: 100px;
 }
