@@ -38,6 +38,33 @@ if(isset($_POST['post'])) {
         <img id="loading" src="assets/images/icons/loading.gif"/>
 
     </div>
+
+    <div class="user_details column">
+
+        <h4>Trending topics</h4>
+
+        <div class="trends">
+            <?php
+            $query = mysqli_query($con, "SELECT * FROM trends ORDER BY hits DESC LIMIT 9");
+
+            foreach ($query as $row) {
+
+                $word = $row['title'];
+                $word_dot = strlen($word) >= 14 ? "..." : "";
+
+                $trimmed_word = str_split($word, 14);
+                $trimmed_word = $trimmed_word[0];
+
+                echo "<div style='padding:1px'>";
+                echo $trimmed_word . $word_dot;
+                echo "<br /></div>";
+            }
+
+            ?>
+        </div>
+
+    </div>
+
     <script>
         var userLoggedIn = '<?php echo $userLoggedIn; ?>';
 
