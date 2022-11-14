@@ -9,32 +9,46 @@ class Post {
     }
 
     public function submitPost($body, $user_to) {
-        $body = strip_tags($body); // removes html tags
-        $body = mysqli_real_escape_string($this->con, $body);
-
-        $body = str_replace('\r\n', "\n", $body);
-        $body = nl2br($body);
-
-        $check_empty = preg_replace('/\s+/', '', $body); //Deletes all spaces
-
+        //remove html tags
+        $body = strip_tags($body);
+        //replace new lines with space<br/>space
+        $body = str_replace(array("\r\n", "\r", "\n"), " <br/> ", $body);
+        $check_empty = preg_replace('/\s+/', '', $body);
+    
         if($check_empty != "") {
-
-            $body_array = preg_split("/\s+/", $body);
-
-            foreach($body_array as $key => $value) {
-
-                if(strpos($value, "www.youtube.com/watch?v=") !== false) {
-
-                    $link = preg_split("!&!", $value);
-                    $value = preg_replace("!watch?v=!", "embed/", $link[0]);
-                    $value = "<br /><iframe width=\'420\' height=\'315\' src=\'" . $value . "\'></iframe><br />";
-                    $body_array[$key] = $value;
-
-                }
-
+        //redex split at spaces
+        $body_array = preg_split("/\s+/", $body);
+    
+        foreach($body_array as $key => $value){
+    
+                $regex_images = '~https?://\S+?(?:png|gif|jpe?g)~';
+                $regex_links = '~(?<!src=\')https?://\S+\b~x';
+    
+                if(strpos($value, "www.youtube.com/watch?v=") !== false){
+            $link = preg_split("!&!", $value);
+            $value = str_replace("https://www.youtube.com/watch?v=", "", $link[0]);
+    
+            $value = "<div class=\'embed-container youtube\' data-embed=\'". $value ."\'></div>";
+            $body_array[$key] = $value;
             }
-
-            $body = implode(" ", $body_array);
+                if(strpos($value, "https://youtu.be/") !== false){
+                    $link = preg_split("!\?!", $value);
+                    $value = str_replace("https://youtu.be/", "", $link[0]);
+                    $value = "<div class=\'embed-container youtube\' data-embed=\'". $value ."\'></div>";
+            $body_array[$key] = $value;
+            }
+                if(preg_match($regex_images, $value)) {
+            $link = preg_split("!\?!", $value);
+                $value = preg_replace($regex_images, "<div class='embed-images' data-embed='\\0'></div>", $link[0]);
+            $body_array[$key] = $value;
+                }
+                else if(preg_match($regex_links, $value)) {
+            $value = preg_replace($regex_links, "<div class='embed-link' data-embed='\\0'></div>", $value);
+                    $body_array[$key] = $value;
+                }
+                $body = implode(" ", $body_array);
+            }
+            $body = mysqli_real_escape_string($this->con, $body);
 
             // Current date and time
             $date_added = date("Y-m-d H:i:s");
@@ -317,6 +331,24 @@ class Post {
                 <script>
 
                     $(document).ready(function() {
+                        //Youtube embedding handling:
+                        var youtube = document.querySelectorAll( ".youtube" );
+                        for (var i = 0; i < youtube.length; i++) {
+                            youtube[i].innerHTML = "<img src='https://img.youtube.com/vi/" + youtube[i].dataset.embed + "/sddefault.jpg' async class='play-youtube-video'><div class='play-button'></div>";
+                            youtube[i].addEventListener( "click", function() {
+                                this.innerHTML = '<iframe allowfullscreen frameborder="0" class="embed-responsive-item" src="https://www.youtube.com/embed/' + this.dataset.embed + '"></iframe>';
+                            });
+                        };
+                    
+                        var embeded_images = document.querySelectorAll( ".embed-images" );
+                        for (var i = 0; i < embeded_images.length; i++) {
+                            embeded_images[i].innerHTML = "<a target='_blank' title='Open image in a new window' class='external_link' href='" + embeded_images[i].dataset.embed + "'><img class='postedImages' src='" + embeded_images[i].dataset.embed + "'></a>";
+                        };
+                    
+                        var embeded_link = document.querySelectorAll( ".embed-link" );
+                        for (var i = 0; i < embeded_link.length; i++) {
+                            embeded_link[i].innerHTML = "<a target='_blank' title='Open link in a new window' class='external_link' href='" + embeded_link[i].dataset.embed + "''>" + embeded_link[i].dataset.embed + "</a>";
+                        };
 
                         $('#post<?php echo $id; ?>').on('click', function() {
                             bootbox.confirm("Are you sure you want to delete this post?", function(result) {
@@ -506,6 +538,24 @@ class Post {
                 <script>
 
                     $(document).ready(function() {
+                        //Youtube embedding handling:
+                        var youtube = document.querySelectorAll( ".youtube" );
+                        for (var i = 0; i < youtube.length; i++) {
+                            youtube[i].innerHTML = "<img src='https://img.youtube.com/vi/" + youtube[i].dataset.embed + "/sddefault.jpg' async class='play-youtube-video'><div class='play-button'></div>";
+                            youtube[i].addEventListener( "click", function() {
+                                this.innerHTML = '<iframe allowfullscreen frameborder="0" class="embed-responsive-item" src="https://www.youtube.com/embed/' + this.dataset.embed + '"></iframe>';
+                            });
+                        };
+                    
+                        var embeded_images = document.querySelectorAll( ".embed-images" );
+                        for (var i = 0; i < embeded_images.length; i++) {
+                            embeded_images[i].innerHTML = "<a target='_blank' title='Open image in a new window' class='external_link' href='" + embeded_images[i].dataset.embed + "'><img class='postedImages' src='" + embeded_images[i].dataset.embed + "'></a>";
+                        };
+                    
+                        var embeded_link = document.querySelectorAll( ".embed-link" );
+                        for (var i = 0; i < embeded_link.length; i++) {
+                            embeded_link[i].innerHTML = "<a target='_blank' title='Open link in a new window' class='external_link' href='" + embeded_link[i].dataset.embed + "''>" + embeded_link[i].dataset.embed + "</a>";
+                        };
 
                         $('#post<?php echo $id; ?>').on('click', function() {
                             bootbox.confirm("Are you sure you want to delete this post?", function(result) {
@@ -704,6 +754,24 @@ class Post {
 				<script>
 
 					$(document).ready(function() {
+                        //Youtube embedding handling:
+                        var youtube = document.querySelectorAll( ".youtube" );
+                        for (var i = 0; i < youtube.length; i++) {
+                            youtube[i].innerHTML = "<img src='https://img.youtube.com/vi/" + youtube[i].dataset.embed + "/sddefault.jpg' async class='play-youtube-video'><div class='play-button'></div>";
+                            youtube[i].addEventListener( "click", function() {
+                                this.innerHTML = '<iframe allowfullscreen frameborder="0" class="embed-responsive-item" src="https://www.youtube.com/embed/' + this.dataset.embed + '"></iframe>';
+                            });
+                        };
+                    
+                        var embeded_images = document.querySelectorAll( ".embed-images" );
+                        for (var i = 0; i < embeded_images.length; i++) {
+                            embeded_images[i].innerHTML = "<a target='_blank' title='Open image in a new window' class='external_link' href='" + embeded_images[i].dataset.embed + "'><img class='postedImages' src='" + embeded_images[i].dataset.embed + "'></a>";
+                        };
+                    
+                        var embeded_link = document.querySelectorAll( ".embed-link" );
+                        for (var i = 0; i < embeded_link.length; i++) {
+                            embeded_link[i].innerHTML = "<a target='_blank' title='Open link in a new window' class='external_link' href='" + embeded_link[i].dataset.embed + "''>" + embeded_link[i].dataset.embed + "</a>";
+                        };
 
 						$('#post<?php echo $id; ?>').on('click', function() {
 							bootbox.confirm("Are you sure you want to delete this post?", function(result) {
