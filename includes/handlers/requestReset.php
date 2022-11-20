@@ -15,6 +15,12 @@ if(isset($_POST["email"])) {
     
     $emailTo = $_POST["email"];
 
+    $code = uniqid(true);
+    $query = mysqli_query($con, "INSERT INTO resetpasswords(code, email) VALUES('$code', '$emailTo')");
+    if(!$query) {
+        exit("Error creating unique user code.");
+    }
+
     $mail = new PHPMailer(true);
 
     try {
@@ -34,9 +40,11 @@ if(isset($_POST["email"])) {
         
 
         //Content
+        $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . "/resetPassword.php?code=$code";
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+        $mail->Subject = 'Your password reset link';
+        $mail->Body    = "<h1>You have requested a password reset</h1>
+                                Click <a href='$url'>this link</a> to do so.";
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
